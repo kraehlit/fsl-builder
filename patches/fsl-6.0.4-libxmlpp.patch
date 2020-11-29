@@ -1,0 +1,30 @@
+diff -Naur fsl-6.0.4.orig/extras/src/libxmlpp/libxml++/io/istreamparserinputbuffer.cc fsl-6.0.4/extras/src/libxmlpp/libxml++/io/istreamparserinputbuffer.cc
+--- fsl-6.0.4.orig/extras/src/libxmlpp/libxml++/io/istreamparserinputbuffer.cc	2019-05-20 14:50:12.000000000 +0200
++++ fsl-6.0.4/extras/src/libxmlpp/libxml++/io/istreamparserinputbuffer.cc	2020-11-15 20:29:34.752164858 +0100
+@@ -39,6 +39,6 @@
+ 
+   bool IStreamParserInputBuffer::do_close()
+   {
+-    return input_;
++    return input_.good();
+   }
+ }
+diff -Naur fsl-6.0.4.orig/extras/src/libxmlpp/libxml++/io/ostreamoutputbuffer.cc fsl-6.0.4/extras/src/libxmlpp/libxml++/io/ostreamoutputbuffer.cc
+--- fsl-6.0.4.orig/extras/src/libxmlpp/libxml++/io/ostreamoutputbuffer.cc	2019-05-20 14:50:12.000000000 +0200
++++ fsl-6.0.4/extras/src/libxmlpp/libxml++/io/ostreamoutputbuffer.cc	2020-11-15 20:29:34.760164858 +0100
+@@ -29,13 +29,13 @@
+     // here we rely on the ostream implicit conversion to boolean, to know if the stream can be used and/or if the write succeded.
+     if(output_)
+       output_.write(buffer, len);
+-    return output_;
++    return output_.good();
+   }
+ 
+   bool OStreamOutputBuffer::do_close()
+   {
+     if(output_)
+         output_.flush();
+-    return output_;
++    return output_.good();
+   }
+ }

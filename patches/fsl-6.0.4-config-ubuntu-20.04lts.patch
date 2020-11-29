@@ -1,0 +1,32 @@
+diff -Naur fsl-6.0.4.orig/config/buildSettings.mk fsl-6.0.4/config/buildSettings.mk
+--- fsl-6.0.4.orig/config/buildSettings.mk	2020-06-19 15:48:02.000000000 +0200
++++ fsl-6.0.4/config/buildSettings.mk	2020-11-15 20:29:34.736164857 +0100
+@@ -144,7 +144,7 @@
+ # CUDA development environment
+ CUDAVER := $(or $(CUDAVER),9.1)
+ #$(info $$CUDAVER is [${CUDAVER}])
+-CUDA_INSTALLATION = /opt/cuda-${CUDAVER}
++CUDA_INSTALLATION = /usr
+ ifdef SINGULARITY_NAME
+ CUDA_INSTALLATION = /usr/local/cuda-${CUDAVER}
+ endif
+@@ -161,13 +161,13 @@
+ LIB_ZLIB = ${FSLEXTLIB}
+ INC_ZLIB = ${FSLEXTINC}
+ # QT library
+-QTDIR = /usr/lib/qt3
+-LIB_QT = ${QTDIR}/lib
+-INC_QT = ${QTDIR}/include
++QTDIR = /usr/lib/qt5
++LIB_QT = /usr/lib/x86_64-linux-gnu
++INC_QT = /usr/include/x86_64-linux-gnu/qt5
+ # VTK library
+-VTKDIR_INC = /home/fs0/cowboy/var/caper_linux_64-gcc4.4/VTK7/include/vtk-7.0
+-VTKDIR_LIB = /home/fs0/cowboy/var/caper_linux_64-gcc4.4/VTK7/lib
+-VTKSUFFIX = -7.0
++VTKDIR_INC = /usr/include/vtk-7.1
++VTKDIR_LIB = /usr/lib/x86_64-linux-gnu
++VTKSUFFIX = -7.1
+ # openblas
+ LIB_NEWMAT = ${FSLEXTLIB} -lopenblas
+ # get and then parse gcc version to run context specific builds

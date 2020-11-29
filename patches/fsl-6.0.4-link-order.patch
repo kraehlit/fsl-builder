@@ -1,0 +1,608 @@
+diff -Naur fsl-6.0.4.orig/src/avwutils/Makefile fsl-6.0.4/src/avwutils/Makefile
+--- fsl-6.0.4.orig/src/avwutils/Makefile	2020-07-17 13:25:09.000000000 +0200
++++ fsl-6.0.4/src/avwutils/Makefile	2020-11-15 20:29:34.784164859 +0100
+@@ -6,7 +6,7 @@
+ USRINCFLAGS = -I${INC_NEWMAT} -I${INC_PROB} -I${INC_ZLIB}
+ USRLDFLAGS = -L${LIB_NEWMAT} -L${LIB_PROB} -L${LIB_ZLIB}
+ 
+-LIBS = -lnewimage -lmiscmaths -lprob -lNewNifti -lnewmat -lutils -lznz -lm -lz
++LIBS = -lnewimage -lmiscmaths -lprob -lNewNifti -lnewmat -lutils -lznz -lopenblas -lm -lz
+ 
+ XFILES = fslorient fslstats fslmerge \
+          fslpspec fslroi fslnvols fsl2ascii fslascii2img  \
+diff -Naur fsl-6.0.4.orig/src/basisfield/Makefile fsl-6.0.4/src/basisfield/Makefile
+--- fsl-6.0.4.orig/src/basisfield/Makefile	2019-10-25 12:11:54.000000000 +0200
++++ fsl-6.0.4/src/basisfield/Makefile	2020-11-15 20:29:34.792164860 +0100
+@@ -12,7 +12,7 @@
+ OBJS = dctfield.o splinefield.o basisfield.o
+ # OBJS = dctfield.o splinefield.o basisfield.o splines.o
+ 
+-LIBS = -lnewimage -lmiscmaths -lutils -lfslio -lniftiio -lznz -lz -lnewmat -lprob -lm
++LIBS = -lnewimage -lmiscmaths -lutils -lfslio -lniftiio -lznz -lz -lnewmat -lprob -lopenblas -lm
+ 
+ all: libbasisfield.a
+ 
+diff -Naur fsl-6.0.4.orig/src/bet2/Makefile fsl-6.0.4/src/bet2/Makefile
+--- fsl-6.0.4.orig/src/bet2/Makefile	2020-01-24 17:10:09.000000000 +0100
++++ fsl-6.0.4/src/bet2/Makefile	2020-11-15 20:29:34.800164860 +0100
+@@ -9,7 +9,7 @@
+ 
+ 
+ #LIBS=-lfslsurface_backcompat -lfslsurface -lfirst_lib -lfslvtkio -lgiftiio -lexpat -lmeshclass -lnewimage -lmiscmaths -lfslio -lniftiio -lznz -lnewmat -lutils -lz
+-LIBS=-lfirst_lib -lfslvtkio -lmeshclass -lnewimage -lmiscmaths -lNewNifti -lznz -lnewmat -lutils -lz
++LIBS=-lfirst_lib -lfslvtkio -lmeshclass -lnewimage -lmiscmaths -lNewNifti -lznz -lnewmat -lutils -lopenblas -lz
+ 
+ BETOBJS=bet2.o 
+ BETSURFOBJS=betsurf.o 
+diff -Naur fsl-6.0.4.orig/src/bint/Makefile fsl-6.0.4/src/bint/Makefile
+--- fsl-6.0.4.orig/src/bint/Makefile	2019-01-24 16:13:24.000000000 +0100
++++ fsl-6.0.4/src/bint/Makefile	2020-11-15 20:29:34.808164860 +0100
+@@ -5,7 +5,7 @@
+ USRINCFLAGS = -I${INC_NEWMAT} -I${INC_PROB} -I${INC_ZLIB}
+ USRLDFLAGS = -L${LIB_NEWMAT} -L${LIB_PROB} -L${LIB_ZLIB}
+ 
+-LIBS = -lutils -lnewimage -lmiscmaths -lm -lnewmat -lNewNifti -lznz -lprob -lz
++LIBS = -lutils -lnewimage -lmiscmaths -lm -lnewmat -lNewNifti -lznz -lprob -lopenblas -lz
+ 
+ XFILES = mean
+ 
+diff -Naur fsl-6.0.4.orig/src/cluster/Makefile fsl-6.0.4/src/cluster/Makefile
+--- fsl-6.0.4.orig/src/cluster/Makefile	2020-04-06 18:14:09.000000000 +0200
++++ fsl-6.0.4/src/cluster/Makefile	2020-11-15 20:29:34.816164861 +0100
+@@ -5,7 +5,7 @@
+ USRINCFLAGS = -I${INC_NEWMAT} -I${INC_PROB} -I${INC_ZLIB} -I${INC_BOOST} 
+ USRLDFLAGS = -L${LIB_NEWMAT} -L${LIB_PROB} -L${LIB_ZLIB}
+ 
+-LIBS = -lutils -lwarpfns -lbasisfield -lnewimage -lmiscmaths -lprob -lNewNifti -lznz -lnewmat -lz
++LIBS = -lutils -lwarpfns -lbasisfield -lnewimage -lmiscmaths -lprob -lNewNifti -lznz -lnewmat -lopenblas -lz
+ 
+ IOBJS = infertest.o infer.o
+ ILIBS = -lprob
+@@ -16,7 +16,7 @@
+ 
+ CLUSTER = cluster
+ COBJS = cluster.o infer.o
+-CLIBS = -lutils -lwarpfns -lbasisfield -lnewimage -lmiscmaths -lNewNifti -lznz -lnewmat -lprob -lz
++CLIBS = -lutils -lwarpfns -lbasisfield -lnewimage -lmiscmaths -lNewNifti -lznz -lnewmat -lprob -lopenblas -lz
+ 
+ CCOBJS = connectedcomp.o
+ 
+diff -Naur fsl-6.0.4.orig/src/CUDIMOT/Makefile fsl-6.0.4/src/CUDIMOT/Makefile
+--- fsl-6.0.4.orig/src/CUDIMOT/Makefile	2018-12-20 23:30:56.000000000 +0100
++++ fsl-6.0.4/src/CUDIMOT/Makefile	2020-11-15 20:29:34.828164861 +0100
+@@ -50,7 +50,7 @@
+ USRINCFLAGS = -I${INC_NEWMAT} -I${INC_NEWRAN} -I${INC_CPROB} -I${INC_PROB} -I${INC_BOOST} -I${INC_ZLIB} -I$(MODELPATH) 
+ USRLDFLAGS = -L${LIB_NEWMAT} -L${LIB_NEWRAN} -L${LIB_CPROB} -L${LIB_PROB} -L${LIB_ZLIB}
+ 
+-DLIBS = -lwarpfns -lbasisfield -lmeshclass -lnewimage -lutils -lmiscmaths -lnewmat -lnewran -lNewNifti -lznz -lcprob -lprob -lm -lz
++DLIBS = -lwarpfns -lbasisfield -lmeshclass -lnewimage -lutils -lmiscmaths -lnewmat -lnewran -lNewNifti -lznz -lcprob -lprob -lopenblas -lm -lz
+ 
+ CUDIMOT=$(DIR_objs)/${modelname}
+ 
+diff -Naur fsl-6.0.4.orig/src/CUDIMOT/utils/compile_Fanning2psi.sh fsl-6.0.4/src/CUDIMOT/utils/compile_Fanning2psi.sh
+--- fsl-6.0.4.orig/src/CUDIMOT/utils/compile_Fanning2psi.sh	2018-12-20 23:30:56.000000000 +0100
++++ fsl-6.0.4/src/CUDIMOT/utils/compile_Fanning2psi.sh	2020-11-15 20:29:34.828164861 +0100
+@@ -1,3 +1,3 @@
+-c++ -m64 -O3 -fexpensive-optimizations -o fanning2psi fanning2psi.cc -I${FSLDIR}/include -I${FSLDIR}/extras/include/newmat -I../.. -lnewimage -lmiscmaths -lnewmat -lfslio -lniftiio -lznz -lz -L${FSLDIR}/lib -L${FSLDIR}/extras/lib
++c++ -m64 -O3 -fexpensive-optimizations -o fanning2psi fanning2psi.cc -I${FSLDIR}/include -I${FSLDIR}/extras/include/newmat -I../.. -lnewimage -lmiscmaths -lnewmat -lfslio -lniftiio -lznz -lopenblas -lz -L${FSLDIR}/lib -L${FSLDIR}/extras/lib
+ 
+ 
+diff -Naur fsl-6.0.4.orig/src/CUDIMOT/utils/compile_getFanningOrientation.sh fsl-6.0.4/src/CUDIMOT/utils/compile_getFanningOrientation.sh
+--- fsl-6.0.4.orig/src/CUDIMOT/utils/compile_getFanningOrientation.sh	2018-12-20 23:30:56.000000000 +0100
++++ fsl-6.0.4/src/CUDIMOT/utils/compile_getFanningOrientation.sh	2020-11-15 20:29:34.828164861 +0100
+@@ -1,3 +1,3 @@
+-c++ -m64 -O3 -fexpensive-optimizations -o getFanningOrientation getFanningOrientation.cc -I${FSLDIR}/include -I${FSLDIR}/extras/include/newmat -I../.. -lnewimage -lmiscmaths -lnewmat -lfslio -lniftiio -lznz -lz -L${FSLDIR}/lib -L${FSLDIR}/extras/lib
++c++ -m64 -O3 -fexpensive-optimizations -o getFanningOrientation getFanningOrientation.cc -I${FSLDIR}/include -I${FSLDIR}/extras/include/newmat -I../.. -lnewimage -lmiscmaths -lnewmat -lfslio -lniftiio -lznz -lopenblas -lz -L${FSLDIR}/lib -L${FSLDIR}/extras/lib
+ 
+ 
+diff -Naur fsl-6.0.4.orig/src/CUDIMOT/utils/compile_initilise_Psi.sh fsl-6.0.4/src/CUDIMOT/utils/compile_initilise_Psi.sh
+--- fsl-6.0.4.orig/src/CUDIMOT/utils/compile_initilise_Psi.sh	2018-12-20 23:30:56.000000000 +0100
++++ fsl-6.0.4/src/CUDIMOT/utils/compile_initilise_Psi.sh	2020-11-15 20:29:34.828164861 +0100
+@@ -1,3 +1,3 @@
+-c++ -m64 -O3 -fexpensive-optimizations -o initialise_Psi initialise_Psi.cc -I${FSLDIR}/include -I${FSLDIR}/extras/include/newmat -I../.. -lnewimage -lmiscmaths -lnewmat -lfslio -lniftiio -lznz -lz -L${FSLDIR}/lib -L${FSLDIR}/extras/lib
++c++ -m64 -O3 -fexpensive-optimizations -o initialise_Psi initialise_Psi.cc -I${FSLDIR}/include -I${FSLDIR}/extras/include/newmat -I../.. -lnewimage -lmiscmaths -lnewmat -lfslio -lniftiio -lznz -lopenblas -lz -L${FSLDIR}/lib -L${FSLDIR}/extras/lib
+ 
+ 
+diff -Naur fsl-6.0.4.orig/src/eddy/Makefile fsl-6.0.4/src/eddy/Makefile
+--- fsl-6.0.4.orig/src/eddy/Makefile	2020-07-22 16:11:14.000000000 +0200
++++ fsl-6.0.4/src/eddy/Makefile	2020-11-15 20:29:34.840164862 +0100
+@@ -71,7 +71,7 @@
+ TESTMIBINSOBJS=test_MI_bins.o PostEddyAlignShellsFunctions.o EddyCommandLineOptions.o ECModels.o KMatrix.o HyParEstimator.o ECScanClasses.o EddyUtils.o EddyHelperClasses.o DiffusionGP.o b0Predictor.o 
+ MASSAGEOBJS=massage_fieldmap.o
+ TOPUPOBJS=topup_matrices.o topup_file_io.o displacement_vector.o 
+-LIBS=-lwarpfns -lmeshclass -lbasisfield -lnewimage -lmiscmaths -lprob -lNewNifti -lznz -lutils -lnewmat -lm -lz
++LIBS=-lwarpfns -lmeshclass -lbasisfield -lnewimage -lmiscmaths -lprob -lNewNifti -lznz -lutils -lnewmat -lopenblas -lm -lz
+ ifdef NVCC11
+ 	NVCC=${NVCC11}
+ endif
+diff -Naur fsl-6.0.4.orig/src/fast4/Makefile fsl-6.0.4/src/fast4/Makefile
+--- fsl-6.0.4.orig/src/fast4/Makefile	2018-09-28 14:45:24.000000000 +0200
++++ fsl-6.0.4/src/fast4/Makefile	2020-11-15 20:29:34.852164862 +0100
+@@ -7,7 +7,7 @@
+ USRINCFLAGS = -I${INC_NEWMAT} -I${INC_ZLIB}
+ USRLDFLAGS = -L${LIB_NEWMAT} -L${LIB_ZLIB}
+ 
+-LIBS = -lnewimage -lmiscmaths -lNewNifti -lutils -lnewmat -lznz -lm -lz
++LIBS = -lnewimage -lmiscmaths -lNewNifti -lutils -lnewmat -lznz -lopenblas -lm -lz
+ 
+ SOBJS = ${NOBJS} fast_two.o mriseg_two.o multi_mriseg_two.o
+ 
+diff -Naur fsl-6.0.4.orig/src/fdt/Makefile fsl-6.0.4/src/fdt/Makefile
+--- fsl-6.0.4.orig/src/fdt/Makefile	2020-07-22 13:50:23.000000000 +0200
++++ fsl-6.0.4/src/fdt/Makefile	2020-11-15 20:35:53.840180122 +0100
+@@ -14,7 +14,7 @@
+ USRINCFLAGS = -I${INC_NEWMAT} -I${INC_NEWRAN} -I${INC_CPROB} -I${INC_PROB} -I${INC_BOOST} -I${INC_ZLIB}
+ USRLDFLAGS = -L${LIB_NEWMAT} -L${LIB_NEWRAN} -L${LIB_CPROB} -L${LIB_PROB} -L${LIB_ZLIB}
+ 
+-DLIBS = -lwarpfns -lbasisfield -lmeshclass -lnewimage -lmiscmaths -lutils -lnewmat -lnewran -lNewNifti -lznz -lcprob -lprob -lm -lz
++DLIBS = -lwarpfns -lbasisfield -lmeshclass -lnewimage -lmiscmaths -lutils -lnewmat -lnewran -lNewNifti -lznz -lcprob -lprob -lopenblas -lm -lz
+ 
+ DTIFIT=dtifit
+ CCOPS=ccops
+diff -Naur fsl-6.0.4.orig/src/feat5/Makefile fsl-6.0.4/src/feat5/Makefile
+--- fsl-6.0.4.orig/src/feat5/Makefile	2020-07-17 14:58:24.000000000 +0200
++++ fsl-6.0.4/src/feat5/Makefile	2020-11-15 20:29:34.876164863 +0100
+@@ -6,7 +6,7 @@
+ USRLDFLAGS =  -L${LIB_NEWMAT} -L${LIB_PROB} -L${LIB_ZLIB} -L${LIB_GD} -L${LIB_GDC} -L${LIB_PNG}
+ 
+ IOLIBS = -lNewNifti -lznz
+-LIBS = -lnewimage -lmiscplot -lmiscpic -lmiscmaths -lprob -lnewmat -lutils $(IOLIBS) -lm -lz  -lgdc -lgd -lpng
++LIBS = -lnewimage -lmiscplot -lmiscpic -lmiscmaths -lprob -lnewmat -lutils $(IOLIBS) -lopenblas -lm -lz  -lgdc -lgd -lpng
+ 
+ XFILES = cutoffcalc feat_model tsplot prewhiten generateConfounds popp pnm_evs
+ 
+diff -Naur fsl-6.0.4.orig/src/film/Makefile fsl-6.0.4/src/film/Makefile
+--- fsl-6.0.4.orig/src/film/Makefile	2020-07-15 11:54:04.000000000 +0200
++++ fsl-6.0.4/src/film/Makefile	2020-11-15 20:29:34.888164864 +0100
+@@ -5,7 +5,7 @@
+ USRINCFLAGS = -I${INC_NEWMAT} -I${INC_PROB} -I${INC_ZLIB}
+ USRLDFLAGS = -L${LIB_NEWMAT} -L${LIB_PROB} -L${LIB_ZLIB}
+ 
+-LIBS = -lfslsurface -lfslvtkio -lmeshclass  -lfirst_lib -lnewimage -lmiscmaths -lutils -lm -lnewmat -lgiftiio -lNewNifti -lznz -lprob -lz -lexpat
++LIBS = -lfslsurface -lfslvtkio -lmeshclass  -lfirst_lib -lnewimage -lmiscmaths -lutils -lm -lnewmat -lgiftiio -lNewNifti -lznz -lprob -lopenblas -lz -lexpat
+ 
+ XFILES = film_gls contrast_mgr ttoz ftoz ttologp
+ 
+diff -Naur fsl-6.0.4.orig/src/filmbabe/Makefile fsl-6.0.4/src/filmbabe/Makefile
+--- fsl-6.0.4.orig/src/filmbabe/Makefile	2018-04-23 14:10:04.000000000 +0200
++++ fsl-6.0.4/src/filmbabe/Makefile	2020-11-15 20:29:34.896164864 +0100
+@@ -5,7 +5,7 @@
+ USRINCFLAGS = -I${INC_NEWMAT} -I${INC_PROB} -I${INC_GD} -I${INC_GDC} -I${INC_PNG} -I${INC_ZLIB}
+ USRLDFLAGS = -L${LIB_NEWMAT} -L${LIB_PROB} -L${LIB_GD} -L${LIB_GDC} -L${LIB_PNG} -L${LIB_ZLIB}
+ 
+-LIBS = -lutils -lmiscplot -lmiscpic -lnewimage -lmiscmaths -lnewmat -lNewNifti -lprob -lgdc -lgd -lpng -lznz -lz -lm
++LIBS = -lutils -lmiscplot -lmiscpic -lnewimage -lmiscmaths -lnewmat -lNewNifti -lprob -lopenblas -lgdc -lgd -lpng -lznz -lz -lm
+ 
+ SCRIPTS = filmbabescript
+ 
+diff -Naur fsl-6.0.4.orig/src/first/Makefile fsl-6.0.4/src/first/Makefile
+--- fsl-6.0.4.orig/src/first/Makefile	2020-06-18 12:00:43.000000000 +0200
++++ fsl-6.0.4/src/first/Makefile	2020-11-15 20:29:34.904164864 +0100
+@@ -9,9 +9,9 @@
+ 
+ 
+ 
+-LIBS= -lshapeModel -lfirst_lib -lfslvtkio -lmeshclass -lnewimage -lprob -lmiscmaths -lNewNifti -lznz -lnewmat  -lutils -lz 
++LIBS= -lshapeModel -lfirst_lib -lfslvtkio -lmeshclass -lnewimage -lprob -lmiscmaths -lNewNifti -lznz -lnewmat  -lutils -lopenblas -lz 
+ 
+-FMBLIBS= -lnewimage -lmiscmaths -lNewNifti -lznz -lnewmat  -lutils -lz 
++FMBLIBS= -lnewimage -lmiscmaths -lNewNifti -lznz -lnewmat  -lutils -lopenblas -lz 
+ 
+ XFILES= first first_utils first_mult_bcorr
+ 
+diff -Naur fsl-6.0.4.orig/src/first_lib/Makefile fsl-6.0.4/src/first_lib/Makefile
+--- fsl-6.0.4.orig/src/first_lib/Makefile	2012-08-30 17:43:54.000000000 +0200
++++ fsl-6.0.4/src/first_lib/Makefile	2020-11-15 20:29:34.920164865 +0100
+@@ -8,7 +8,7 @@
+ USRLDFLAGS = -L${LIB_NEWMAT} 
+ 
+ 
+-LIBS= -lMVdisc -lmeshUtils -lfslvtkIO -lfirst_lib -lshapeModel -lfslvtkio -lmeshclass -lnewimage -lprob -lmiscmaths -lfslio -lniftiio -lznz -lnewmat  -lutils -lz 
++LIBS= -lMVdisc -lmeshUtils -lfslvtkIO -lfirst_lib -lshapeModel -lfslvtkio -lmeshclass -lnewimage -lprob -lmiscmaths -lfslio -lniftiio -lznz -lnewmat  -lutils -lopenblas -lz 
+ 
+ XFILES=
+ 
+diff -Naur fsl-6.0.4.orig/src/flameo/Makefile fsl-6.0.4/src/flameo/Makefile
+--- fsl-6.0.4.orig/src/flameo/Makefile	2018-10-02 15:46:58.000000000 +0200
++++ fsl-6.0.4/src/flameo/Makefile	2020-11-15 20:29:34.924164865 +0100
+@@ -10,7 +10,7 @@
+         LIBS = -liconv
+ endif
+ 
+-LIBS += -lutils -lnewimage -lmiscmaths -lm -lnewmat -lNewNifti -lcifti -lxml++-2.6 -lxml2 -lboost_filesystem -lboost_system -lznz -lprob -lz 
++LIBS += -lutils -lnewimage -lmiscmaths -lm -lnewmat -lNewNifti -lcifti -lxml++-2.6 -lxml2 -lboost_filesystem -lboost_system -lznz -lprob -lopenblas -lz 
+ 
+ XFILES = flameo
+ 
+diff -Naur fsl-6.0.4.orig/src/flirt/Makefile fsl-6.0.4/src/flirt/Makefile
+--- fsl-6.0.4.orig/src/flirt/Makefile	2020-04-06 12:25:10.000000000 +0200
++++ fsl-6.0.4/src/flirt/Makefile	2020-11-15 20:29:34.944164866 +0100
+@@ -7,7 +7,7 @@
+ USRINCFLAGS = -I${INC_NEWMAT} -I${INC_ZLIB} -I${INC_BOOST}
+ USRLDFLAGS = -L${LIB_NEWMAT} -L${LIB_ZLIB}
+ 
+-LIBS = -lwarpfns -lbasisfield -lnewimage -lmiscmaths -lNewNifti -lznz -lnewmat -lutils -lm -lz
++LIBS = -lwarpfns -lbasisfield -lnewimage -lmiscmaths -lNewNifti -lznz -lnewmat -lutils -lopenblas -lm -lz
+ 
+ FL_OBJS = globaloptions.o flirt.o 
+ C_OBJS = convert_xfm.o
+diff -Naur fsl-6.0.4.orig/src/fnirt/Makefile fsl-6.0.4/src/fnirt/Makefile
+--- fsl-6.0.4.orig/src/fnirt/Makefile	2018-10-16 15:31:48.000000000 +0200
++++ fsl-6.0.4/src/fnirt/Makefile	2020-11-15 20:29:34.956164866 +0100
+@@ -8,7 +8,7 @@
+ FNIRT_OBJS=fnirt_costfunctions.o intensity_mappers.o matching_points.o fnirtfns.o fnirt.o
+ INTMAP_OBJS=fnirt_costfunctions.o fnirtfns.o intensity_mappers.o matching_points.o mapintensities.o
+ INVWARP_OBJS=new_invwarp.o
+-LIBS=-lwarpfns -lmeshclass -lbasisfield -lnewimage -lmiscmaths -lNewNifti -lznz -lutils -lnewmat -lm -lz
++LIBS=-lwarpfns -lmeshclass -lbasisfield -lnewimage -lmiscmaths -lNewNifti -lznz -lutils -lnewmat -lopenblas -lm -lz
+ 
+ XFILES=fnirt new_invwarp
+ 
+diff -Naur fsl-6.0.4.orig/src/fslsurface/Makefile fsl-6.0.4/src/fslsurface/Makefile
+--- fsl-6.0.4.orig/src/fslsurface/Makefile	2014-12-16 15:52:05.000000000 +0100
++++ fsl-6.0.4/src/fslsurface/Makefile	2020-11-15 20:29:34.972164867 +0100
+@@ -3,7 +3,7 @@
+ 
+ PROJNAME = fslsurface
+ 
+-FMLIBS= -lshapeModel -lfslvtkio -lmeshclass -lnewimage -lmiscmaths -lNewNifti -lznz -lnewmat -lutils -lprob -lz
++FMLIBS= -lshapeModel -lfslvtkio -lmeshclass -lnewimage -lmiscmaths -lNewNifti -lznz -lnewmat -lutils -lprob -lopenblas -lz
+ isapple = $(findstring apple, $(FSLMACHTYPE))
+ 
+ ifneq ($(isapple),apple)
+diff -Naur fsl-6.0.4.orig/src/fslvtkio/Makefile fsl-6.0.4/src/fslvtkio/Makefile
+--- fsl-6.0.4.orig/src/fslvtkio/Makefile	2015-07-01 17:06:51.000000000 +0200
++++ fsl-6.0.4/src/fslvtkio/Makefile	2020-11-15 20:29:34.976164867 +0100
+@@ -6,7 +6,7 @@
+ USRINCFLAGS = -I${INC_NEWMAT} -I${INC_ZLIB} -I${HOME}/fsldev/lib
+ USRLDFLAGS = -L${LIB_NEWMAT}  -L${LIB_ZLIB} 
+ 
+-LIBS= -lmeshclass -lnewimage -lmiscmaths -lfslio -lniftiio -lznz -lnewmat -lutils -lz
++LIBS= -lmeshclass -lnewimage -lmiscmaths -lfslio -lniftiio -lznz -lnewmat -lutils -lopenblas -lz
+ 
+ SHAPEOBJS=fslvtkio.o
+  
+diff -Naur fsl-6.0.4.orig/src/fugue/Makefile fsl-6.0.4/src/fugue/Makefile
+--- fsl-6.0.4.orig/src/fugue/Makefile	2019-12-06 16:43:43.000000000 +0100
++++ fsl-6.0.4/src/fugue/Makefile	2020-11-15 20:29:34.984164867 +0100
+@@ -6,7 +6,7 @@
+ USRINCFLAGS = -I${INC_NEWMAT} -I${INC_BOOST} -I${INC_ZLIB}
+ USRLDFLAGS = -L${LIB_NEWMAT} -L${LIB_ZLIB}
+ 
+-LIBS=-lwarpfns -lbasisfield -lmeshclass -lnewimage -lmiscmaths -lNewNifti -lznz -lnewmat -lutils -lz
++LIBS=-lwarpfns -lbasisfield -lmeshclass -lnewimage -lmiscmaths -lNewNifti -lznz -lnewmat -lutils -lopenblas -lz
+ 
+ PRELUDEOBJS=prelude.o unwarpfns.o
+ FUGUEOBJS=fugue.o unwarpfns.o
+diff -Naur fsl-6.0.4.orig/src/gps/Makefile fsl-6.0.4/src/gps/Makefile
+--- fsl-6.0.4.orig/src/gps/Makefile	2014-12-12 17:36:23.000000000 +0100
++++ fsl-6.0.4/src/gps/Makefile	2020-11-15 20:29:35.000164868 +0100
+@@ -6,7 +6,7 @@
+ USRLDFLAGS=-L${LIB_NEWMAT} 
+ 
+ OBJS=gps.o
+-LIBS=-lmiscmaths -lNewNifti -lznz -lutils -lnewmat -lm -lz
++LIBS=-lmiscmaths -lNewNifti -lznz -lutils -lnewmat -lopenblas -lm -lz
+ 
+ XFILES=gps
+ 
+diff -Naur fsl-6.0.4.orig/src/lesions/Makefile fsl-6.0.4/src/lesions/Makefile
+--- fsl-6.0.4.orig/src/lesions/Makefile	2019-09-03 12:48:08.000000000 +0200
++++ fsl-6.0.4/src/lesions/Makefile	2020-11-15 20:29:35.008164868 +0100
+@@ -7,7 +7,7 @@
+ USRINCFLAGS = -I${INC_NEWMAT} -I${INC_ZLIB} -I${INC_BOOST}
+ USRLDFLAGS = -L${LIB_NEWMAT} -L${LIB_ZLIB}
+ 
+-LIBS = -lwarpfns -lbasisfield -lnewimage -lmiscmaths -lNewNifti -lznz -lnewmat -lutils -lm -lz
++LIBS = -lwarpfns -lbasisfield -lnewimage -lmiscmaths -lNewNifti -lznz -lnewmat -lutils -lopenblas -lm -lz
+ 
+ RF_OBJS = rf_lda.o
+ PP_OBJS = preproc.o
+diff -Naur fsl-6.0.4.orig/src/libmeshutils/Makefile fsl-6.0.4/src/libmeshutils/Makefile
+--- fsl-6.0.4.orig/src/libmeshutils/Makefile	2014-12-16 15:20:18.000000000 +0100
++++ fsl-6.0.4/src/libmeshutils/Makefile	2020-11-15 20:29:35.012164869 +0100
+@@ -24,7 +24,7 @@
+         LIBS+=-lfslvtkconv 
+ endif
+ 
+-LIBS+=-lfirst_lib -lshapeModel -lmeshclass -lnewimage -lmiscmaths -lprob -lNewNifti -lznz -lutils -lnewmat  -lz
++LIBS+=-lfirst_lib -lshapeModel -lmeshclass -lnewimage -lmiscmaths -lprob -lNewNifti -lznz -lutils -lnewmat -lopenblas -lz 
+ 
+ SWOBJS=meshUtils.o
+ RMUOBJS=meshUtils.o run_mesh_utils.o
+diff -Naur fsl-6.0.4.orig/src/libvis/Makefile fsl-6.0.4/src/libvis/Makefile
+--- fsl-6.0.4.orig/src/libvis/Makefile	2019-09-20 13:45:59.000000000 +0200
++++ fsl-6.0.4/src/libvis/Makefile	2020-11-15 20:29:35.028164869 +0100
+@@ -7,7 +7,7 @@
+ USRINCFLAGS = -I${INC_NEWMAT} -I${INC_PROB} -I${INC_GD} -I${INC_GDC} -I${INC_PNG} -I${INC_ZLIB} -I${INC_BOOST}
+ USRLDFLAGS = -L${LIB_NEWMAT} -L${LIB_PROB} -L${LIB_GD} -L${LIB_GDC} -L${LIB_PNG} -L${LIB_ZLIB}
+ 
+-LIBS = -lnewimage -lmiscplot -lmiscpic -lmiscmaths -lfslio -lniftiio -lznz -lnewmat -lprob -lm  -lgdc -lgd -lpng -lz
++LIBS = -lnewimage -lmiscplot -lmiscpic -lmiscmaths -lfslio -lniftiio -lznz -lnewmat -lprob -lopenblas -lm  -lgdc -lgd -lpng -lz
+ CXXFLAGS += -std=c++98
+ 
+ PLOTOBJS =  miscplot.o  
+diff -Naur fsl-6.0.4.orig/src/mcflirt/Makefile fsl-6.0.4/src/mcflirt/Makefile
+--- fsl-6.0.4.orig/src/mcflirt/Makefile	2019-01-28 12:42:23.000000000 +0100
++++ fsl-6.0.4/src/mcflirt/Makefile	2020-11-15 20:29:35.048164870 +0100
+@@ -8,7 +8,7 @@
+ MOBJS = mcflirt.o Globaloptions.o Log.o
+ M2OBJS = mcflirt2.o
+ 
+-LIBS = -lnewimage -lmiscmaths -lutils -lNewNifti -lznz -lnewmat -lprob -lm -lz
++LIBS = -lnewimage -lmiscmaths -lutils -lNewNifti -lznz -lnewmat -lprob -lopenblas -lm -lz
+ 
+ XFILES = mcflirt 
+ 
+diff -Naur fsl-6.0.4.orig/src/melodic/Makefile fsl-6.0.4/src/melodic/Makefile
+--- fsl-6.0.4.orig/src/melodic/Makefile	2020-03-30 15:51:19.000000000 +0200
++++ fsl-6.0.4/src/melodic/Makefile	2020-11-15 20:29:35.048164870 +0100
+@@ -15,7 +15,7 @@
+         LIBS = -liconv
+ endif
+ 
+-LIBS += -lutils -lnewimage -lmiscplot -lmiscpic -lmiscmaths -lNewNifti -lcifti -lxml++-2.6 -lxml2 -lboost_filesystem -lboost_system -lznz -lnewmat -lprob -lm  -lgdc -lgd -lpng -lz
++LIBS += -lutils -lnewimage -lmiscplot -lmiscpic -lmiscmaths -lNewNifti -lcifti -lxml++-2.6 -lxml2 -lboost_filesystem -lboost_system -lznz -lnewmat -lprob -lopenblas -lm  -lgdc -lgd -lpng -lz
+ 
+ TEST_OBJS = test.o 
+ 
+diff -Naur fsl-6.0.4.orig/src/meshclass/Makefile fsl-6.0.4/src/meshclass/Makefile
+--- fsl-6.0.4.orig/src/meshclass/Makefile	2014-12-15 18:21:46.000000000 +0100
++++ fsl-6.0.4/src/meshclass/Makefile	2020-11-15 20:29:35.060164871 +0100
+@@ -6,7 +6,7 @@
+ USRINCFLAGS = -I${INC_NEWMAT} -I${INC_ZLIB} -I${INC_BOOST}
+ USRLDFLAGS = -L${LIB_NEWMAT}  -L${LIB_ZLIB}
+ 
+-LIBS=-lnewimage -lmiscmaths -lNewNifti -lznz -lnewmat -lutils -lz
++LIBS=-lnewimage -lmiscmaths -lNewNifti -lznz -lnewmat -lutils -lopenblas -lz ${USRLDFLAGS}
+ 
+ MESHOBJS=point.o mpoint.o triangle.o mesh.o pt_special.o profile.o 
+ DRAWOBJS=drawmesh.o mpoint.o triangle.o mesh.o point.o pt_special.o
+diff -Naur fsl-6.0.4.orig/src/miscmaths/Makefile fsl-6.0.4/src/miscmaths/Makefile
+--- fsl-6.0.4.orig/src/miscmaths/Makefile	2020-07-22 16:26:24.000000000 +0200
++++ fsl-6.0.4/src/miscmaths/Makefile	2020-11-15 20:29:35.080164871 +0100
+@@ -11,7 +11,7 @@
+ 
+ OBJS = miscmaths.o optimise.o miscprob.o kernel.o histogram.o base2z.o t2z.o f2z.o minimize.o cspline.o sparse_matrix.o sparsefn.o rungekutta.o nonlin.o bfmatrix.o Simplex.o SpMatMatrices.o
+ 
+-LIBS = -lutils -lnewmat -lprob -lm
++LIBS = -lutils -lnewmat -lprob -lopenblas -lm
+ 
+ # The target "all" should ALWAYS be provided
+ #   typically it will just be another target name
+diff -Naur fsl-6.0.4.orig/src/miscvis/Makefile fsl-6.0.4/src/miscvis/Makefile
+--- fsl-6.0.4.orig/src/miscvis/Makefile	2020-07-22 13:01:34.000000000 +0200
++++ fsl-6.0.4/src/miscvis/Makefile	2020-11-15 20:29:35.096164872 +0100
+@@ -5,7 +5,7 @@
+ USRINCFLAGS = -I${INC_NEWMAT} -I${INC_PROB} -I${INC_GD} -I${INC_GDC} -I${INC_PNG} -I${INC_ZLIB}
+ USRLDFLAGS = -L${LIB_NEWMAT} -L${LIB_PROB} -L${LIB_GD} -L${LIB_GDC} -L${LIB_PNG} -L${LIB_ZLIB}
+ 
+-LIBS = -lutils -lnewimage -lmiscplot -lmiscpic -lmiscmaths -lNewNifti -lznz -lnewmat -lcprob -lm  -lgdc -lgd -lpng -lz
++LIBS = -lutils -lnewimage -lmiscplot -lmiscpic -lmiscmaths -lNewNifti -lznz -lnewmat -lcprob -lopenblas -lm  -lgdc -lgd -lpng -lm -lz
+ 
+ WOBJS = writepng.o wpng.o
+ 
+diff -Naur fsl-6.0.4.orig/src/mist/common/common.pri fsl-6.0.4/src/mist/common/common.pri
+--- fsl-6.0.4.orig/src/mist/common/common.pri	2019-01-07 15:22:09.000000000 +0100
++++ fsl-6.0.4/src/mist/common/common.pri	2020-11-15 20:34:58.172177881 +0100
+@@ -21,7 +21,7 @@
+ INCLUDEPATH += $$PWD
+ 
+ 
+-LIBS += -lwarpfns -lbasisfield -lnewimage -lmiscmaths -lnewmat -lgdc -lgd -lpng12 -lfslio -lniftiio -lutils -lznz -lm -lz
++LIBS += -lwarpfns -lbasisfield -lnewimage -lmiscmaths -lnewmat -lgdc -lgd -lpng12 -lfslio -lniftiio -lutils -lznz -lopenblas -lm -lz
+ LIBS += -lnlopt
+ LIBS += -lvtkIOLegacy$$VTKSUFFIX -lvtkIOCore$$VTKSUFFIX -lvtkFiltersModeling$$VTKSUFFIX -lvtkFiltersCore$$VTKSUFFIX \
+ 	-lvtkCommonExecutionModel$$VTKSUFFIX -lvtkCommonDataModel$$VTKSUFFIX -lvtkCommonMisc$$VTKSUFFIX \
+@@ -30,7 +30,7 @@
+ LIBS += -lboost_log$$BOOSTSUFFIX -lboost_log_setup$$BOOSTSUFFIX -lboost_thread$$BOOSTSUFFIX \
+ 	-lboost_filesystem$$BOOSTSUFFIX -lboost_date_time$$BOOSTSUFFIX -lboost_chrono$$BOOSTSUFFIX \
+ 	-lboost_system$$BOOSTSUFFIX -lboost_serialization$$BOOSTSUFFIX -lboost_regex$$BOOSTSUFFIX
+-LIBS += -lrt -lpthread -ldl $$SQLITEDIR/lib/libsqlite3.a
++LIBS += -lrt -lpthread $$SQLITEDIR/lib/libsqlite3.a -ldl
+ 
+ # NOTE: This is not compiled as a library because boost::serialization seems to require that all serialisation code
+ # is moved out of the public header files in that case ...
+diff -Naur fsl-6.0.4.orig/src/mist/Makefile fsl-6.0.4/src/mist/Makefile
+--- fsl-6.0.4.orig/src/mist/Makefile	2019-01-07 15:22:09.000000000 +0100
++++ fsl-6.0.4/src/mist/Makefile	2020-11-15 20:33:26.096174173 +0100
+@@ -25,8 +25,8 @@
+ 			-lvtkCommonCore${VTKSUFFIX} -lvtksys${VTKSUFFIX} \
+ 			-lboost_log -lboost_log_setup -lboost_thread -lboost_filesystem -lboost_date_time -lboost_chrono \
+ 			-lboost_system -lboost_serialization -lboost_regex -lwarpfns -lbasisfield -lnewimage -lmiscmaths \
+-			-lnewmat -lgdc -lgd -lpng -lNewNifti -lutils -lznz -lm -lz -lnlopt -lpthread -ldl \
+-			${SQLITE_LIB}/libsqlite3.a ${LIBRT}
++			-lnewmat -lgdc -lgd -lpng -lNewNifti -lutils -lznz -lopenblas -lm -lz -lnlopt -lpthread \
++			${SQLITE_LIB}/libsqlite3.a ${LIBRT} -ldl
+ 
+ HDRS = common/gibbsshapemodel.h common/mrfshapemodel.h common/mvnshapemodel.h common/plotting.h common/profilefilters.h common/profilemixtures.h common/profilemodel.h common/profilepriors.h common/serialisation.h common/shape.h common/shapemodel.h common/stats.h common/transformation.h mist/builddate.h
+ 
+diff -Naur fsl-6.0.4.orig/src/mm/Makefile fsl-6.0.4/src/mm/Makefile
+--- fsl-6.0.4.orig/src/mm/Makefile	2019-09-20 19:54:36.000000000 +0200
++++ fsl-6.0.4/src/mm/Makefile	2020-11-15 20:29:35.144164874 +0100
+@@ -5,7 +5,7 @@
+ USRINCFLAGS = -I${INC_NEWRAN} -I${INC_NEWMAT} -I${INC_PROB} -I${INC_GD} -I${INC_GDC} -I${INC_PNG} -I${INC_ZLIB}
+ USRLDFLAGS = -L${LIB_NEWRAN} -L${LIB_NEWMAT} -L${LIB_PROB} -L${LIB_GD} -L${LIB_GDC} -L${LIB_PNG} -L${LIB_ZLIB}
+ 
+-LIBS = -lnewimage -lmiscmaths -lutils -lmiscplot -lmiscpic -lNewNifti -lznz -lm -lnewmat -lprob -lgdc -lgd -lpng -lz
++LIBS = -lnewimage -lmiscmaths -lutils -lmiscplot -lmiscpic -lNewNifti -lznz -lm -lnewmat -lprob -lopenblas -lgdc -lgd -lpng -lz
+ 
+ XFILES = mm
+ 
+diff -Naur fsl-6.0.4.orig/src/MSM/Makefile fsl-6.0.4/src/MSM/Makefile
+--- fsl-6.0.4.orig/src/MSM/Makefile	2020-07-25 16:30:40.000000000 +0200
++++ fsl-6.0.4/src/MSM/Makefile	2020-11-15 20:29:35.156164874 +0100
+@@ -5,7 +5,7 @@
+ 
+ USRINCFLAGS=-I${INC_NEWMAT} -I${INC_NEWRAN} -I${INC_ZLIB} -I${INC_CPROB} -I${INC_PROB}  -I${INC_GD}  -I${INC_GDC} -I${INC_PNG} -I${INC_BOOST} -I./include -I${FSLDEVDIR}/include -I${FSLDEVDIR}/extras/include
+ USRLDFLAGS=-L${LIB_NEWMAT} -L${LIB_NEWRAN} -L${LIB_ZLIB}  -L${LIB_CPROB} -L${LIB_PROB} -L${LIB_GDC} -L${LIB_PNG} -L${LIB_GD}   -L. -L${FSLDEVDIR}/lib  -L${FSLDEVDIR}/extras/lib
+-LIBS= -lmeshreg -lfastpd -ldiscrete -lnewmeshclass -lfslsurface -lgiftiio -lmm -lexpat -lfslvtkio -lnewimage -lmiscmaths -lmiscplot -lmiscpic -lNewNifti -lutils  -lbint -lnewran -lprob -lznz -lgdc -lgd -lpng  -lz
++LIBS= -lmeshreg -lfastpd -ldiscrete -lnewmeshclass -lfslsurface -lgiftiio -lmm -lexpat -lfslvtkio -lnewimage -lmiscmaths -lmiscplot -lmiscpic -lNewNifti -lutils  -lbint -lnewran -lprob -lznz -lopenblas -lgdc -lgd -lpng  -lz
+ 
+ ifdef HOCR
+ 	USRCXXFLAGS+= -std=c++11  -DHAS_HOCR
+@@ -13,7 +13,7 @@
+ 
+ ifdef TBB
+ 	USRCXXFLAGS+= -DHAS_TBB
+-	LIBS= -lmeshreg -lfastpd -ldiscrete -ltbb -lnewmeshclass -lfslsurface -lgiftiio -lmm -lexpat -lfslvtkio -lnewimage -lmiscmaths -lmiscplot -lmiscpic -lNewNifti -lutils  -lbint -lnewran -lprob -lznz -lgdc -lgd -lpng  -lz
++	LIBS= -lmeshreg -lfastpd -ldiscrete -ltbb -lnewmeshclass -lfslsurface -lgiftiio -lmm -lexpat -lfslvtkio -lnewimage -lmiscmaths -lmiscplot -lmiscpic -lNewNifti -lutils  -lbint -lnewran -lprob -lznz -lopenblas -lgdc -lgd -lpng  -lz
+ 
+ endif
+ 
+diff -Naur fsl-6.0.4.orig/src/MVdisc/Makefile fsl-6.0.4/src/MVdisc/Makefile
+--- fsl-6.0.4.orig/src/MVdisc/Makefile	2012-08-30 16:39:56.000000000 +0200
++++ fsl-6.0.4/src/MVdisc/Makefile	2020-11-15 20:29:35.164164875 +0100
+@@ -6,7 +6,7 @@
+ USRINCFLAGS = -I${INC_NEWMAT} -I${INC_ZLIB}
+ USRLDFLAGS = -L${LIB_NEWMAT}  -L${LIB_ZLIB} 
+ 
+-LIBS= -lfslvtkio -lmeshclass -lnewimage -lmiscmaths -lfslio -lniftiio -lznz -lnewmat -lutils -lz
++LIBS= -lfslvtkio -lmeshclass -lnewimage -lmiscmaths -lfslio -lniftiio -lznz -lnewmat -lutils -lopenblas -lz
+ 
+ SHAPEOBJS=MVdisc.o
+  
+diff -Naur fsl-6.0.4.orig/src/newimage/Makefile fsl-6.0.4/src/newimage/Makefile
+--- fsl-6.0.4.orig/src/newimage/Makefile	2020-05-29 14:40:05.000000000 +0200
++++ fsl-6.0.4/src/newimage/Makefile	2020-11-15 20:29:35.180164875 +0100
+@@ -14,7 +14,7 @@
+ USRINCFLAGS = -I${INC_NEWMAT} -I${INC_BOOST} -I${INC_ZLIB} -DEXPOSE_TREACHEROUS
+ USRLDFLAGS = -L${LIB_NEWMAT} -L${LIB_ZLIB}
+ 
+-LIBS =-lmiscmaths -lNewNifti -lutils -lnewmat -lznz -lm -lz
++LIBS =-lmiscmaths -lNewNifti -lutils -lnewmat -lznz -lopenblas -lm -lz
+ 
+ OBJS = lazy.o newimage.o generalio.o newimagefns.o complexvolume.o imfft.o
+ NOBJS = ${OBJS} costfns.o
+diff -Naur fsl-6.0.4.orig/src/possum/Makefile fsl-6.0.4/src/possum/Makefile
+--- fsl-6.0.4.orig/src/possum/Makefile	2018-10-23 12:32:07.000000000 +0200
++++ fsl-6.0.4/src/possum/Makefile	2020-11-15 20:29:35.184164876 +0100
+@@ -12,7 +12,7 @@
+ USRINCFLAGS = -I${INC_NEWMAT} -I${INC_PROB} -I${INC_ZLIB}
+ USRLDFLAGS = -L${LIB_NEWMAT} -L${LIB_PROB} -L${LIB_ZLIB}
+ 
+-LIBS=-lnewimage -lmiscmaths -lnewmat -lutils -lprob -lNewNifti -lznz -lm -lz
++LIBS=-lnewimage -lmiscmaths -lnewmat -lutils -lprob -lNewNifti -lznz -lopenblas -lm -lz
+ 
+ BOBJS=b0calc.o
+ SOBJS=spharm_rm.o
+diff -Naur fsl-6.0.4.orig/src/ptx2/Makefile fsl-6.0.4/src/ptx2/Makefile
+--- fsl-6.0.4.orig/src/ptx2/Makefile	2020-01-24 11:47:42.000000000 +0100
++++ fsl-6.0.4/src/ptx2/Makefile	2020-11-15 20:29:35.188164876 +0100
+@@ -23,7 +23,7 @@
+ USRINCFLAGS = -I${INC_NEWMAT} -I${INC_NEWRAN} -I${INC_CPROB} -I${INC_PROB} -I${INC_BOOST} -I${INC_ZLIB}
+ USRLDFLAGS = -L${LIB_NEWMAT} -L${LIB_NEWRAN} -L${LIB_CPROB} -L${LIB_PROB} -L${LIB_ZLIB}
+ 
+-DLIBS =  -lnewmeshclass -lwarpfns -lbasisfield -lfslsurface  -lfslvtkio -lmeshclass -lnewimage -lutils -lmiscmaths -lnewmat -lnewran -lNewNifti -lgiftiio -lexpat -lfirst_lib -lznz -lcprob -lutils -lprob -lm -lz
++DLIBS =  -lnewmeshclass -lwarpfns -lbasisfield -lfslsurface  -lfslvtkio -lmeshclass -lnewimage -lutils -lmiscmaths -lnewmat -lnewran -lNewNifti -lgiftiio -lexpat -lfirst_lib -lznz -lcprob -lutils -lprob -lopenblas -lm -lz
+ 
+ CCOPS=ccops
+ PTX=probtrackx2
+diff -Naur fsl-6.0.4.orig/src/qboot/Makefile fsl-6.0.4/src/qboot/Makefile
+--- fsl-6.0.4.orig/src/qboot/Makefile	2014-12-11 16:07:33.000000000 +0100
++++ fsl-6.0.4/src/qboot/Makefile	2020-11-15 20:29:35.204164876 +0100
+@@ -5,7 +5,7 @@
+ USRINCFLAGS = -I${INC_NEWMAT} -I${INC_NEWRAN} -I${INC_CPROB} -I${INC_PROB} -I${INC_BOOST} -I${INC_ZLIB}
+ USRLDFLAGS = -L${LIB_NEWMAT} -L${LIB_NEWRAN} -L${LIB_CPROB} -L${LIB_PROB} -L${LIB_ZLIB}
+ 
+-DLIBS = -lnewimage -lutils -lmiscmaths -lnewmat -lnewran -lNewNifti -lznz -lcprob -lprob -lm -lz
++DLIBS = -lnewimage -lutils -lmiscmaths -lnewmat -lnewran -lNewNifti -lznz -lcprob -lprob -lopenblas -lm -lz
+ 
+ QBOOT=qboot
+ 
+diff -Naur fsl-6.0.4.orig/src/randomise/Makefile fsl-6.0.4/src/randomise/Makefile
+--- fsl-6.0.4.orig/src/randomise/Makefile	2019-05-31 16:05:53.000000000 +0200
++++ fsl-6.0.4/src/randomise/Makefile	2020-11-15 20:29:35.220164877 +0100
+@@ -5,7 +5,7 @@
+ USRINCFLAGS = -I${INC_NEWMAT} -I${INC_PROB} -I${INC_ZLIB}
+ USRLDFLAGS = -L${LIB_NEWMAT} -L${LIB_PROB} -L${LIB_ZLIB}
+ 
+-LIBS = -lnewimage -lmiscmaths -lutils -lm -lnewmat -lNewNifti -lznz -lprob -lz
++LIBS = -lnewimage -lmiscmaths -lutils -lm -lnewmat -lNewNifti -lznz -lprob -lopenblas -lz
+ 
+ XFILES = randomise fdr unconfound
+ 
+diff -Naur fsl-6.0.4.orig/src/siena/Makefile fsl-6.0.4/src/siena/Makefile
+--- fsl-6.0.4.orig/src/siena/Makefile	2020-06-18 11:52:50.000000000 +0200
++++ fsl-6.0.4/src/siena/Makefile	2020-11-15 20:29:35.220164877 +0100
+@@ -5,7 +5,7 @@
+ USRINCFLAGS = -I${INC_NEWMAT} -I${INC_ZLIB}
+ USRLDFLAGS = -L${LIB_NEWMAT} -L${LIB_ZLIB}
+ 
+-LIBCC = -lnewimage -lmiscmaths -lNewNifti -lznz -lnewmat -lutils -lm -lz
++LIBCC = -lnewimage -lmiscmaths -lNewNifti -lznz -lnewmat -lutils -lopenblas -lm -lz
+ 
+ SN_OBJS = surface_norm.o
+ CS_OBJS = cylsamp.o
+diff -Naur fsl-6.0.4.orig/src/slicetimer/Makefile fsl-6.0.4/src/slicetimer/Makefile
+--- fsl-6.0.4.orig/src/slicetimer/Makefile	2014-12-11 14:00:08.000000000 +0100
++++ fsl-6.0.4/src/slicetimer/Makefile	2020-11-15 20:29:35.224164877 +0100
+@@ -7,7 +7,7 @@
+ 
+ OBJS = slicetimer.o
+ 
+-LIBS = -lnewimage -lmiscmaths -lNewNifti -lznz -lnewmat -lprob -lm -lutils -lz
++LIBS = -lnewimage -lmiscmaths -lNewNifti -lznz -lnewmat -lprob -lm -lutils -lopenblas -lz
+ 
+ XFILES = slicetimer
+ 
+diff -Naur fsl-6.0.4.orig/src/susan/Makefile fsl-6.0.4/src/susan/Makefile
+--- fsl-6.0.4.orig/src/susan/Makefile	2015-07-07 13:51:14.000000000 +0200
++++ fsl-6.0.4/src/susan/Makefile	2020-11-15 20:29:35.232164877 +0100
+@@ -11,7 +11,7 @@
+ 
+ 
+ LIBS = -lss_16SI -lfslio -lniftiio -lznz -lm -lz
+-LIBS++ = -lnewimage -lmiscmaths -lnewmat -lutils -lNewNifti -lznz -lm -lz
++LIBS++ = -lnewimage -lmiscmaths -lnewmat -lutils -lNewNifti -lznz -lopenblas -lm -lz
+ 
+ 
+ RUNTCLS = Susan
+diff -Naur fsl-6.0.4.orig/src/swe/Makefile fsl-6.0.4/src/swe/Makefile
+--- fsl-6.0.4.orig/src/swe/Makefile	2019-08-27 15:20:33.000000000 +0200
++++ fsl-6.0.4/src/swe/Makefile	2020-11-15 20:29:35.236164878 +0100
+@@ -5,7 +5,7 @@
+ USRINCFLAGS = -I${INC_NEWMAT} -I${INC_PROB} -I${INC_ZLIB}
+ USRLDFLAGS = -L${LIB_NEWMAT} -L${LIB_PROB} -L${LIB_ZLIB}
+ 
+-LIBS = -lnewimage -lmiscmaths -lutils -lm -lnewmat -lNewNifti -lznz -lprob -lz
++LIBS = -lnewimage -lmiscmaths -lutils -lm -lnewmat -lNewNifti -lznz -lprob -lopenblas -lz
+ 
+ XFILES = swe
+ 
+diff -Naur fsl-6.0.4.orig/src/tbss/Makefile fsl-6.0.4/src/tbss/Makefile
+--- fsl-6.0.4.orig/src/tbss/Makefile	2016-01-31 15:55:42.000000000 +0100
++++ fsl-6.0.4/src/tbss/Makefile	2020-11-15 20:29:35.248164878 +0100
+@@ -5,7 +5,7 @@
+ USRINCFLAGS = -I${INC_NEWMAT} -I${INC_CPROB} -I${INC_PROB} -I${INC_ZLIB}
+ USRLDFLAGS = -L${LIB_NEWMAT} -L${LIB_CPROB} -L${LIB_PROB} -L${LIB_ZLIB}
+ 
+-LIBS = -lnewimage -lmiscmaths -lprob -lNewNifti -lznz -lnewmat -lutils -lm -lz
++LIBS = -lnewimage -lmiscmaths -lprob -lNewNifti -lznz -lnewmat -lutils -lopenblas -lm -lz
+ 
+ XFILES = distancemap tbss_skeleton swap_voxelwise swap_subjectwise
+ 
+diff -Naur fsl-6.0.4.orig/src/topup/Makefile fsl-6.0.4/src/topup/Makefile
+--- fsl-6.0.4.orig/src/topup/Makefile	2019-11-20 18:17:28.000000000 +0100
++++ fsl-6.0.4/src/topup/Makefile	2020-11-15 20:29:35.260164879 +0100
+@@ -8,7 +8,7 @@
+ OBJS=topup_matrices.o topup_file_io.o topup_costfunctions.o topupfns.o topup.o
+ APPLYOBJS=topup_matrices.o topup_file_io.o displacement_vector.o applytopup.o
+ TESTOBJS=topup_matrices.o topup_file_io.o displacement_vector.o test_displacement_vector.o
+-LIBS=-lwarpfns -lmeshclass -lbasisfield -lnewimage -lmiscmaths -lprob -lNewNifti -lznz -lutils -lnewmat -lm -lz
++LIBS=-lwarpfns -lmeshclass -lbasisfield -lnewimage -lmiscmaths -lprob -lNewNifti -lznz -lutils -lnewmat -lopenblas -lm -lz
+ 
+ XFILES=topup applytopup
+ FXFILES=test_displacement_vector
+diff -Naur fsl-6.0.4.orig/src/warpfns/Makefile fsl-6.0.4/src/warpfns/Makefile
+--- fsl-6.0.4.orig/src/warpfns/Makefile	2019-12-06 16:46:25.000000000 +0100
++++ fsl-6.0.4/src/warpfns/Makefile	2020-11-15 20:29:35.272164879 +0100
+@@ -7,7 +7,7 @@
+ USRINCFLAGS = -I${INC_NEWMAT} -I${INC_BOOST} -I${INC_ZLIB}
+ USRLDFLAGS = -L${LIB_NEWMAT} -L${LIB_ZLIB}
+ 
+-LIBS = -lbasisfield -lmeshclass -lnewimage -lmiscmaths -lfslio -lniftiio -lutils -lnewmat -lznz -lm -lz
++LIBS = -lbasisfield -lmeshclass -lnewimage -lmiscmaths -lfslio -lniftiio -lutils -lnewmat -lznz -lopenblas -lm -lz
+ 
+ LIB_OBJS = warpfns.o fnirt_file_reader.o fnirt_file_writer.o point_list.o
+ 

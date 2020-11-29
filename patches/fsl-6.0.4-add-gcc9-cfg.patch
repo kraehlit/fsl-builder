@@ -1,0 +1,61 @@
+diff -Naur fsl-6.0.4.orig/config/gnu_64-gcc9./configure.sh fsl-6.0.4/config/gnu_64-gcc9./configure.sh
+--- fsl-6.0.4.orig/config/gnu_64-gcc9./configure.sh	1970-01-01 01:00:00.000000000 +0100
++++ fsl-6.0.4/config/gnu_64-gcc9./configure.sh	2020-11-15 20:29:34.736164857 +0100
+@@ -0,0 +1,12 @@
++# Auto-configure options for Mac OS X Universal build
++
++# Written by Duncan Mortimer
++case "$FSLMACHTYPE" in *darwin*) 
++	echo "BASE CONFIGURE"
++	macosx_opts="-arch x86_64 -mmacosx-version-min=10.9"
++	cflags="${cflags} ${macosx_opts}"
++	cxxflags="${cxxflags} ${macosx_opts}"
++	ldflags="${ldflags} -Wl,-search_paths_first ${macosx_opts}"
++	configure_opts="${configure_opts} --disable-dependency-tracking"
++;; 
++esac
+\ No newline at end of file
+diff -Naur fsl-6.0.4.orig/config/gnu_64-gcc9./externallibs.mk fsl-6.0.4/config/gnu_64-gcc9./externallibs.mk
+--- fsl-6.0.4.orig/config/gnu_64-gcc9./externallibs.mk	1970-01-01 01:00:00.000000000 +0100
++++ fsl-6.0.4/config/gnu_64-gcc9./externallibs.mk	2020-11-15 20:29:34.736164857 +0100
+@@ -0,0 +1 @@
++include ${FSLCONFDIR}/default.mk
+diff -Naur fsl-6.0.4.orig/config/gnu_64-gcc9./systemvars.mk fsl-6.0.4/config/gnu_64-gcc9./systemvars.mk
+--- fsl-6.0.4.orig/config/gnu_64-gcc9./systemvars.mk	1970-01-01 01:00:00.000000000 +0100
++++ fsl-6.0.4/config/gnu_64-gcc9./systemvars.mk	2020-11-15 20:29:34.736164857 +0100
+@@ -0,0 +1 @@
++include ${FSLCONFDIR}/default.mk
+diff -Naur fsl-6.0.4.orig/config/gnu_64-gcc9./tclconfigure.sh fsl-6.0.4/config/gnu_64-gcc9./tclconfigure.sh
+--- fsl-6.0.4.orig/config/gnu_64-gcc9./tclconfigure.sh	1970-01-01 01:00:00.000000000 +0100
++++ fsl-6.0.4/config/gnu_64-gcc9./tclconfigure.sh	2020-11-15 20:29:34.736164857 +0100
+@@ -0,0 +1,13 @@
++# Auto-configure options for Mac OS X Universal build
++
++# Written by Duncan Mortimer
++case "$FSLMACHTYPE" in *darwin*)
++	echo "TCL CONFIGURE"
++	macosx_opts="-arch x86_64"
++	macosx_version="-mmacosx-version-min=10.9"
++	cflags="${cflags} ${macosx_opts} ${macosx_version}" 
++	cxxflags="${cxxflags} ${macosx_opts} ${macosx_version}"
++	ldflags="${ldflags} -Wl,-search_paths_first ${macosx_opts}"
++	configure_opts="${configure_opts} --disable-dependency-tracking"
++;;
++esac
+diff -Naur fsl-6.0.4.orig/config/gnu_64-gcc9./tkconfigure.sh fsl-6.0.4/config/gnu_64-gcc9./tkconfigure.sh
+--- fsl-6.0.4.orig/config/gnu_64-gcc9./tkconfigure.sh	1970-01-01 01:00:00.000000000 +0100
++++ fsl-6.0.4/config/gnu_64-gcc9./tkconfigure.sh	2020-11-15 20:29:34.736164857 +0100
+@@ -0,0 +1,13 @@
++# Auto-configure options for Mac OS X Universal build
++
++# Written by Duncan Mortimer
++case "$FSLMACHTYPE" in *darwin*)
++	echo "TK CONFIGURE"
++	macosx_opts="-arch x86_64"
++	macosx_min="-mmacosx-version-min=10.9"
++	cflags="${cflags} ${macosx_opts} ${macosx_min}"
++	cxxflags="${cxxflags} ${macosx_opts} ${macosx_min}"
++	ldflags="${ldflags} -Wl,-search_paths_first ${macosx_opts}"
++	configure_opts="${configure_opts} --disable-dependency-tracking --x-includes=/usr/X11/include --x-libraries=/usr/X11/lib"
++;;
++esac
