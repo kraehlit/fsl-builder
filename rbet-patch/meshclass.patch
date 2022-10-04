@@ -1,0 +1,12 @@
+diff -Naur meshclass.orig/Makefile meshclass/Makefile
+--- meshclass.orig/Makefile	2014-01-10 19:25:20.000000000 +0100
++++ meshclass/Makefile	2020-11-20 08:59:56.385052528 +0100
+@@ -6,7 +6,7 @@
+ USRINCFLAGS = -I${INC_NEWMAT} -I${INC_ZLIB} -I${INC_BOOST}
+ USRLDFLAGS = -L${LIB_NEWMAT}  -L${LIB_ZLIB}
+ 
+-LIBS=-lnewimage -lmiscmaths -lfslio -lniftiio -lznz -lnewmat -lutils -lz
++LIBS=-lnewimage -lmiscmaths -lNewNifti -lznz -lnewmat -lutils -lopenblas -lz ${USRLDFLAGS}
+ 
+ MESHOBJS=point.o mpoint.o triangle.o mesh.o pt_special.o profile.o 
+ DRAWOBJS=drawmesh.o mpoint.o triangle.o mesh.o point.o pt_special.o

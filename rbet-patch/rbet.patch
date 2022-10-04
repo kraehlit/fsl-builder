@@ -1,0 +1,12 @@
+diff -Naur rbet.orig/Makefile rbet/Makefile
+--- rbet.orig/Makefile	2014-01-10 19:25:20.000000000 +0100
++++ rbet/Makefile	2020-11-20 09:03:01.817730520 +0100
+@@ -6,7 +6,7 @@
+ USRINCFLAGS = -I${INC_NEWMAT} -I${INC_ZLIB} -I../
+ USRLDFLAGS = -L../meshclass -L${LIB_NEWMAT} -L${LIB_ZLIB}
+ 
+-LIBS=-lmeshclass -lnewimage -lprob -lmiscmaths -lfslio -lniftiio -lznz -lnewmat -lutils -lz
++LIBS=-lfirst_lib -fslvtkio -lmeshclass -lnewimage -lmiscmaths -lNewNifti -lznz -lnewmat -lutils -lopenblas -lz
+ 
+ BETOBJS=bet2.o 
+ BETSURFOBJS=betsurf.o 
